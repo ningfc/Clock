@@ -15,9 +15,6 @@ class TimerApp:
     def __init__(self, root):
         # 禁止水平和垂直方向的缩放
         root.resizable(width=False, height=False)
-        # 设置窗口置顶
-        root.attributes("-topmost", True)
-        
         self.root = root
         self.root.title("计时器")
         self.canvas_size = 600
@@ -48,7 +45,8 @@ class TimerApp:
         self.millisecond_dot = self.canvas.create_oval(
             dot_x - 5, dot_y - 5,
             dot_x + 5, dot_y + 5,
-            fill="red"
+            fill="red",
+            outline="gray"
         )
 
         # 初始化计时器
@@ -103,14 +101,14 @@ class TimerApp:
 
         # 绘制秒刻度
         pointLentgh = 10
-        for i in range(10):  # 50 个刻度，每 0.1 秒一个
-            angle = 360 * i / 10 - 90
-            length = pointLentgh * 2 if i % 2 == 0 else pointLentgh
-            if i % 2 == 0:
+        for i in range(50):  # 50 个刻度，每 0.1 秒一个
+            angle = 360 * i / 50 - 90
+            length = pointLentgh * 2 if i % 10 == 0 else pointLentgh if i % 5 == 0 else pointLentgh // 2
+            if i % 10 == 0:
                 x0 = self.center_x + (radius - length - pointLentgh) * math.cos(math.radians(angle))
                 y0 = self.center_y + (radius - length - pointLentgh) * math.sin(math.radians(angle))
                 self.time_label = self.canvas.create_text(
-                    x0, y0, text=str(i//2), font=("Helvetica", 25), fill="green"
+                    x0, y0, text=str(i//10), font=("Helvetica", 25), fill="green"
                 )
 
             x1 = self.center_x + (radius - length) * math.cos(math.radians(angle))
